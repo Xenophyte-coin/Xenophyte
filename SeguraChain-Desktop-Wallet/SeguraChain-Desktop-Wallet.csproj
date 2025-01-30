@@ -17,6 +17,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <PackAsTool>True</PackAsTool>
     <IncludeSymbols>True</IncludeSymbols>
+    <AssemblyName>Xenophyte-Desktop-Wallet</AssemblyName>
   </PropertyGroup>
 
 	<PropertyGroup Condition=" '$(TargetFramework)' == 'net8.0-windows'">
