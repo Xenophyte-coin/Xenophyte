@@ -950,11 +950,11 @@ namespace SeguraChain_Lib.Utility
             if (listPacketReceived.Count == 0)
                 listPacketReceived.Add(new ClassReadPacketSplitted());
 
-            if (packetData.Contains(ClassPeerPacketSetting.PacketPeerSplitSeperator))
+            if (packetData.ContainsList(ClassPeerPacketSetting.PacketPeerSplitSeperator, out char charOut))
             {
-                int countSeperator = packetData.Count(x => x == ClassPeerPacketSetting.PacketPeerSplitSeperator);
+                int countSeperator = packetData.Count(x => x == charOut);
 
-                string[] splitPacketData = packetData.Split(new[] { ClassPeerPacketSetting.PacketPeerSplitSeperator }, StringSplitOptions.None);
+                string[] splitPacketData = packetData.Split(new[] { charOut }, StringSplitOptions.None);
 
                 int completed = 0;
 
@@ -963,7 +963,10 @@ namespace SeguraChain_Lib.Utility
                     if (cancellation.IsCancellationRequested)
                         break;
 
-                    listPacketReceived[listPacketReceived.Count > 0 ? listPacketReceived.Count - 1 : 0].Packet += data.Replace(ClassPeerPacketSetting.PacketPeerSplitSeperator.ToString(), "");
+
+                    char randomPacketSeperator = ClassPeerPacketSetting.PacketPeerSplitSeperator[GetRandomBetweenInt(0, listPacketReceived.Count - 1)];
+
+                    listPacketReceived[listPacketReceived.Count > 0 ? listPacketReceived.Count - 1 : 0].Packet += data.Replace(randomPacketSeperator.ToString(), "");
 
                     if (completed < countSeperator)
                     {
@@ -1356,6 +1359,27 @@ namespace SeguraChain_Lib.Utility
         public static string GetStringFromByteArrayUtf8(this byte[] content)
         {
             return content != null && content?.Length > 0 ? new UTF8Encoding().GetString(content) : null;
+        }
+
+        /// <summary>
+        /// Use a list of char and return a bool and character
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="listOfChar"></param>
+        /// <returns></returns>
+        public static bool ContainsList(this string content, List<char> listOfChar, out  char charOut)
+        {
+            foreach(char character in listOfChar)
+            {
+                if (content.Contains(character))
+                {
+                    charOut = character;
+                    return true;
+                }
+            }
+
+            charOut = '\0';
+            return false;
         }
 
         /// <summary>
