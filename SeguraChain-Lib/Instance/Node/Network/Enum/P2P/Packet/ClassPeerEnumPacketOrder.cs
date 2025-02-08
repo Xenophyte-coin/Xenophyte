@@ -4,7 +4,7 @@ namespace SeguraChain_Lib.Instance.Node.Network.Enum.P2P.Packet
 {
     public class ClassPeerPacketSetting
     {
-        public static List<char> PacketPeerSplitSeperator = new List<char>() { '|' };
+        public static char PacketPeerSplitSeperator = '|';
         public const int PacketMaxLengthReceive = 1_000_000_000; // Maximum of 10000000 characters until to get the packet split seperator.
     }
 
