@@ -963,7 +963,6 @@ namespace SeguraChain_Lib.Utility
                     if (cancellation.IsCancellationRequested)
                         break;
 
-
                     char randomPacketSeperator = ClassPeerPacketSetting.PacketPeerSplitSeperator[GetRandomBetweenInt(0, listPacketReceived.Count - 1)];
 
                     listPacketReceived[listPacketReceived.Count > 0 ? listPacketReceived.Count - 1 : 0].Packet += data.Replace(randomPacketSeperator.ToString(), "");
