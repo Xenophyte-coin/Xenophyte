@@ -950,11 +950,11 @@ namespace SeguraChain_Lib.Utility
             if (listPacketReceived.Count == 0)
                 listPacketReceived.Add(new ClassReadPacketSplitted());
 
-            if (packetData.ContainsList(ClassPeerPacketSetting.PacketPeerSplitSeperator, out char charOut))
+            if (packetData.Contains(ClassPeerPacketSetting.PacketPeerSplitSeperator))
             {
-                int countSeperator = packetData.Count(x => x == charOut);
+                int countSeperator = packetData.Count(x => x == ClassPeerPacketSetting.PacketPeerSplitSeperator);
 
-                string[] splitPacketData = packetData.Split(new[] { charOut }, StringSplitOptions.None);
+                string[] splitPacketData = packetData.Split(new[] { ClassPeerPacketSetting.PacketPeerSplitSeperator }, StringSplitOptions.None);
 
                 int completed = 0;
 
@@ -963,7 +963,7 @@ namespace SeguraChain_Lib.Utility
                     if (cancellation.IsCancellationRequested)
                         break;
 
-                    char randomPacketSeperator = ClassPeerPacketSetting.PacketPeerSplitSeperator[GetRandomBetweenInt(0, listPacketReceived.Count - 1)];
+                    char randomPacketSeperator = ClassPeerPacketSetting.PacketPeerSplitSeperator;
 
                     listPacketReceived[listPacketReceived.Count > 0 ? listPacketReceived.Count - 1 : 0].Packet += data.Replace(randomPacketSeperator.ToString(), "");
 
