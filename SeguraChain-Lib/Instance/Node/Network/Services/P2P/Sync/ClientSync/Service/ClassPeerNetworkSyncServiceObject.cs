@@ -2651,7 +2651,7 @@ namespace SeguraChain_Lib.Instance.Node.Network.Services.P2P.Sync.ClientSync.Ser
                         packetPeerList.PeerUniqueIdList[i].Length != BlockchainSetting.PeerUniqueIdHashLength)
                     {
                         ClassLog.WriteLine("Can't register peer: " + packetPeerList.PeerIpList[i] + " because the unique id: \n" + packetPeerList.PeerUniqueIdList[i] + " is not valid.", ClassEnumLogLevelType.LOG_LEVEL_PEER_TASK_SYNC, ClassEnumLogWriteLevel.LOG_WRITE_LEVEL_MEDIUM_PRIORITY);
-                        ClassPeerCheckManager.InputPeerClientInvalidPacket(_peerDatabase, peerIp, peerUniqueId, _peerNetworkSettingObject, _peerFirewallSettingObject, cancellation);
+                        //ClassPeerCheckManager.InputPeerClientInvalidPacket(_peerDatabase, peerIp, peerUniqueId, _peerNetworkSettingObject, _peerFirewallSettingObject, cancellation);
                         continue;
                     }
 

@@ -92,7 +92,8 @@ namespace SeguraChain_Lib.Instance.Node.Network.Services.P2P.Sync.ServerSync.Ser
             try
             {
                 _tcpListenerPeer = new TcpListener(IPAddress.Parse(_peerNetworkSettingObject.ListenIp), _peerNetworkSettingObject.ListenPort);
-                _tcpListenerPeer.Start(_peerNetworkSettingObject.PeerMaxNodeConnectionPerIp);
+                // _tcpListenerPeer.Start(_peerNetworkSettingObject.PeerMaxNodeConnectionPerIp);
+                _tcpListenerPeer.Start();
             }
             catch (Exception error)
             {
