@@ -206,6 +206,8 @@ namespace SeguraChain_Lib.Log
                 {
                     // ignored
                 }
+
+                Thread.Sleep(1);
             }
 
             // Final drain + flush on cancellation

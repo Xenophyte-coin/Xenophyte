@@ -141,7 +141,7 @@ namespace SeguraChain_Lib.TaskManager
                     task.Disposed = true;
                     task.Socket?.Kill(SocketShutdown.Both);
 
-                    try { task.Cancellation?.Cancel(); } catch { }
+                    //try { task.Cancellation?.Cancel(); } catch { }
                     try { task.Task?.Dispose(); } catch { }
 
                     _completedTaskIds.Add(task.Id);

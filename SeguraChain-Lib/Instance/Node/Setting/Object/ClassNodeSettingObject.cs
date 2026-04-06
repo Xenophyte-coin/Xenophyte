@@ -1,6 +1,7 @@
 ﻿using SeguraChain_Lib.Blockchain.Database.DatabaseSetting;
 using SeguraChain_Lib.Blockchain.Setting;
 using SeguraChain_Lib.Utility;
+using System;
 
 namespace SeguraChain_Lib.Instance.Node.Setting.Object
 {
@@ -128,7 +129,7 @@ namespace SeguraChain_Lib.Instance.Node.Setting.Object
             PeerMaxPort = BlockchainSetting.PeerMaxPort;
             PeerServerPacketDelay = BlockchainSetting.PeerServerPacketDelay;
             PeerMaxSemaphoreConnectAwaitDelay = BlockchainSetting.PeerMaxSemaphoreConnectAwaitDelay;
-            PeerMaxRangeBlockToSyncPerRequest = BlockchainSetting.PeerMaxRangeBlockToSyncPerRequest;
+            PeerMaxRangeBlockToSyncPerRequest = BlockchainSetting.PeerMaxRangeBlockToSyncPerRequest * Environment.ProcessorCount;
             PeerMaxRangeTransactionToSyncPerRequest = BlockchainSetting.PeerMaxRangeTransactionToSyncPerRequest;
             PeerEnableSyncTransactionByRange = BlockchainSetting.PeerEnableSyncTransactionByRange;
             PeerEnableSovereignPeerVote = BlockchainSetting.PeerEnableSovereignPeerVote;
