@@ -121,27 +121,34 @@ namespace SeguraChain_RPC_Wallet.Database
         /// <returns></returns>
         public bool SaveWalletDatabase(string walletDatabasePath, string walletFilename, string walletDatabasePassword)
         {
-            if (!ClassAes.GenerateKey(walletDatabasePassword.GetByteArray(), true, out byte[] walletDatabaseEncryptionKey))
-                return false;
-
-            byte[] walletDatabaseEncryptionIv = ClassAes.GenerateIv(walletDatabaseEncryptionKey);
-
-            using (StreamWriter writer = new StreamWriter(walletDatabasePath + walletFilename))
+            try
             {
-                foreach (ClassWalletData walletData in _dictionaryWallet.Values)
-                {
-                    if (!ClassAes.EncryptionProcess(ClassUtility.SerializeData(walletData).GetByteArray(), walletDatabaseEncryptionKey, walletDatabaseEncryptionIv, out byte[] walletDataEncrypted))
-                        continue;
+                if (!ClassAes.GenerateKey(walletDatabasePassword.GetByteArray(), true, out byte[] walletDatabaseEncryptionKey))
+                    return false;
 
-                    string walletDataConverted = Convert.ToBase64String(walletDataEncrypted);
+                byte[] walletDatabaseEncryptionIv = ClassAes.GenerateIv(walletDatabaseEncryptionKey);
+
+                using (StreamWriter writer = new StreamWriter(walletDatabasePath + walletFilename))
+                {
+                    foreach (ClassWalletData walletData in _dictionaryWallet.Values)
+                    {
+                        if (!ClassAes.EncryptionProcess(ClassUtility.SerializeData(walletData).GetByteArray(), walletDatabaseEncryptionKey, walletDatabaseEncryptionIv, out byte[] walletDataEncrypted))
+                            continue;
+
+                        string walletDataConverted = Convert.ToBase64String(walletDataEncrypted);
 
 #if DEBUG
-                    Debug.WriteLine("Save wallet: " + walletData.WalletAddress + " | Content: " + walletDataConverted);
+                        Debug.WriteLine("Save wallet: " + walletData.WalletAddress + " | Content: " + walletDataConverted);
 #endif
-                    writer.WriteLine(walletDataConverted);
+                        writer.WriteLine(walletDataConverted);
+                    }
                 }
             }
-            
+            catch(Exception error)
+            {
+                Console.WriteLine("Error on saving wallet database. Exception: " + error.Message);
+                return false;
+            }
 
             return true;
         }
