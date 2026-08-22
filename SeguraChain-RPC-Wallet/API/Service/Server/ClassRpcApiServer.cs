@@ -124,17 +124,24 @@ namespace SeguraChain_RPC_Wallet.API.Service.Server
             if (!await _concurrentRpcApiClient[clientIp]._semaphoreHandleRpcClient.WaitAsync(_rpcConfig.RpcApiSetting.RpcApiSemaphoreTimeout))
                 return false; // Semaphore is dead.
             */
-            int countApiClient = _concurrentRpcApiClient[clientIp]._listRpcClientObject.Count;
 
-            _concurrentRpcApiClient[clientIp]._listRpcClientObject.Add(new ClassRpcApiClient(
-                _rpcConfig,
-                apiTcpClient, 
-                _nodeApiClient, 
-                _walletDatabase, 
-                _cancellationApiServer));
+            try
+            {
+                int countApiClient = _concurrentRpcApiClient[clientIp]._listRpcClientObject.Count;
 
-            await _concurrentRpcApiClient[clientIp]._listRpcClientObject[countApiClient].HandleApiClient();
+                _concurrentRpcApiClient[clientIp]._listRpcClientObject.Add(new ClassRpcApiClient(
+                    _rpcConfig,
+                    apiTcpClient,
+                    _nodeApiClient,
+                    _walletDatabase,
+                    _cancellationApiServer));
 
+                await _concurrentRpcApiClient[clientIp]._listRpcClientObject[countApiClient].HandleApiClient();
+            }
+            catch
+            {
+                return false;
+            }
             return true;
         }
 

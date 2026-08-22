@@ -189,12 +189,18 @@ namespace SeguraChain_RPC_Wallet.RpcTask
             {
                 while(rpcConfig.RpcWalletEnabled)
                 {
-                    if (!_walletDatabase.SaveWalletDatabase(
-                        rpcConfig.RpcWalletDatabaseSetting.RpcWalletDatabasePath,
-                        rpcConfig.RpcWalletDatabaseSetting.RpcWalletDatabaseFilename,
-                        walletPassword))
-                        Console.WriteLine("Failed to save wallet database.");
-
+                    try
+                    {
+                        if (!_walletDatabase.SaveWalletDatabase(
+                            rpcConfig.RpcWalletDatabaseSetting.RpcWalletDatabasePath,
+                            rpcConfig.RpcWalletDatabaseSetting.RpcWalletDatabaseFilename,
+                            walletPassword))
+                            Console.WriteLine("Failed to save wallet database.");
+                    }
+                    catch(Exception error)
+                    {
+                        Console.WriteLine("Failed to save wallet database. Exception: " + error.Message);
+                    }
                     await Task.Delay(RpcConfigAutoSaveWalletInterval);
                 }
             });
